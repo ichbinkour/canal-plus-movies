@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import './App.scss';
+
+import Movie from "./components/Movie";
 
 function App() {
+  const [movies, setMovies] = useState([])
+  
+  useEffect(() => {
+    setMovies(['1', '2', '3'])
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="header">
+        <div>
+          <h1>myCanal movies list</h1>
+        </div>
       </header>
+      <main>
+        {movies.map((movie) => (
+          <Movie key={movie}/>
+        ))
+          
+        }
+      </main>
     </div>
   );
 }
