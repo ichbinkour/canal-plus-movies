@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMovieList } from '../../api';
+import { getMovieList, getGenresList } from '../../api';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -15,27 +15,31 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      color: 'white'
     },
     searchRoot: {
       '& > *': {
-        margin: theme.spacing(1),
         marginBottom: '1rem',
         width: '100%',
+        marginTop: 80,
+        color: 'white'
       },
     },
   }),
 );
 
-function MoviesListContainer({movies}) {
+function MoviesListContainer({movies, genres}) {
   return (
     <Grid container spacing={3} direction="row" justify="center">
       {movies.map((movie, index) => {
         if (movie.poster_path !== null) {
           return (
-            <Grid item xs={6} sm={3} key={index}>
-              <MoviesItem movie={movie} />
+            <Grid item xs={6} sm={3} lg={2} key={index}>
+              <MoviesItem movie={movie} genres={genres}/>
             </Grid>
           )
+        } else {
+          return null
         }
       })}
     </Grid>
@@ -62,20 +66,19 @@ function SearchInput({next}) {
   const fetchData = (value) => {
     getMovieList('en-US', 1, value.replace(/ /g, '').length > 0 ? value : undefined).then(response => {
       next({response: response.data, query: value, error: false})
-    }).catch(() => {
+    }).catch((e) => {
       next({response: null, query: value, error: true})
     })
   }
 
   const handleChange = (event) => {
-    console.log(event.target.value)
     setValue(event.target.value)
     fetchData(event.target.value);
   }
 
   return (
     <Grid container justify="center">
-      <Grid item xs={6} className={classes.searchRoot}>
+      <Grid item xs={12} sm={8} lg={6} className={classes.searchRoot}>
         <TextField id="outlined-basic" label="Search a movie" variant="outlined"
           value={value}
           onChange={handleChange}
@@ -96,38 +99,51 @@ function EmptyMoviesList() {
 export default function MoviesList() {
   const classes = useStyles();
   const [movies, setMovies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [maxPage, setMaxPage] = useState(500);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [querySearch, setQuerySearch] = useState('');
+  const [genres, setGenres] = useState([]);
 
   const fetchData = () => {
-    getMovieList('en-US', currentPage + 1, querySearch.length > 0 ? querySearch : undefined).then(response => {
-      setMovies(movies.concat(response.data.results))
-      setCurrentPage(response.data.page);
+    if (currentPage !== maxPage) {
+      getMovieList('en-US', currentPage + 1, querySearch.length > 0 ? querySearch : undefined).then(response => {
+        setMovies(movies.concat(response.data.results))
+        setCurrentPage(response.data.page)
+        setMaxPage(response.data.total_pages)
+        setIsLoading(false);
+      }).catch(() => {
+        setIsLoading(false);
+        setError(true);
+      })
+    }
+  }
+
+  const fetchGenres = () => {
+    getGenresList().then(response => {
+      setGenres(response.data.genres)
     }).catch(() => {
       setError(true);
     })
   }
 
   useEffect(() => {
-    getMovieList('en-US', 1).then(response => {
-      setMovies(response.data.results)
-      setCurrentPage(response.data.page)
-      setIsLoading(false);
-    }).catch(() => {
-      setIsLoading(false);
-      setError(true);
-    })
+    setIsLoading(true);
+    fetchData();
+    fetchGenres();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNext = (event) => {
     if (event.error) {
       setError(true);
     } else {
+      setMaxPage(event.response.total_pages)
       setMovies(event.response.results);
       setCurrentPage(event.response.page);
       setQuerySearch(event.query)
+      setIsLoading(false);
     }
   }
 
@@ -147,7 +163,7 @@ export default function MoviesList() {
             hasMore={true}
             loader={<span></span>}
           >
-            <MoviesListContainer movies={movies}/>
+            <MoviesListContainer movies={movies} genres={genres}/>
           </InfiniteScroll>
         </>
       }

@@ -20,6 +20,8 @@ import StarRateIcon from '@material-ui/icons/Star';
 const useStyles = makeStyles({
   root: {
     maxWidth: 250,
+    backgroundColor: "#1e1d1c",
+    color: 'white'
   },
   media: {
     height: 350,
@@ -30,16 +32,20 @@ const useStyles = makeStyles({
   },
   dialogImg: {
     height: 400
+  },
+  sectionTitle: {
+    paddingRight: 10
   }
 });
 
-export default function MoviesItem({movie}: any) {
+export default function MoviesItem({movie, genres}: any) {
   const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
+    console.log(genres)
     setOpen(true);
   };
 
@@ -52,6 +58,12 @@ export default function MoviesItem({movie}: any) {
     'rate-medium': movie.vote_average < 7 && movie.vote_average > 3,
     'rate-low': movie.vote_average <= 3,
   })
+
+  const formatGenres = () => {
+    return genres.filter((v) => {
+      return movie.genre_ids.includes(v.id)
+    }).map((o) => o.name).join(', ')
+  }
 
   return (
     <>
@@ -95,7 +107,7 @@ export default function MoviesItem({movie}: any) {
 
           <h4>
             <Grid container>
-              <Grid item xs={1}>
+              <Grid item className={classes.sectionTitle}>
                 Rate:
               </Grid>
               <Grid item className={rateClasses}>{movie.vote_average}</Grid>
@@ -105,6 +117,8 @@ export default function MoviesItem({movie}: any) {
             </Grid>
           </h4>
           
+          <Grid item>{formatGenres()}</Grid>
+
           <h4>Overview:</h4>
           <DialogContentText>
             {movie.overview}

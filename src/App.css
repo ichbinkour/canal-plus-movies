@@ -5,11 +5,9 @@ body {
     sans-serif;
   margin: 0;
 }
-
 .container {
   margin: 1rem;
 }
-
 .rate-low {
   color: red
 }
@@ -19,18 +17,18 @@ body {
 .rate-high {
   color: green
 }
-
 .movie-title {
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .search-input {
   padding-bottom: 1rem;
 }
-
 .infinite-scroll-component {
   overflow: hidden !important;
+}
+.MuiAppBar-colorPrimary {
+  background-color: #1e1d1c !important;
 }
