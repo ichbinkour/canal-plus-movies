@@ -1,10 +1,12 @@
 # Movie list React app
 
-This project was developed using [](React) and [https://www.themoviedb.org/](TMDb).
+This project was developed using [React](https://reactjs.org/) and [TMDb](https://www.themoviedb.org/).
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+```bash
+
+```
 
 ### `yarn start`
 
