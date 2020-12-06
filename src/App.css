@@ -26,3 +26,11 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.search-input {
+  padding-bottom: 1rem;
+}
+
+.infinite-scroll-component {
+  overflow: hidden !important;
+}
