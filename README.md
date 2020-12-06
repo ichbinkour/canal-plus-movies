@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Movie list React app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was developed using [](React) and [https://www.themoviedb.org/](TMDb).
 
 ## Available Scripts
 
