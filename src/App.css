@@ -1,0 +1,28 @@
+body {
+  font-family: "Roboto",
+    "Helvetica",
+    "Arial",
+    sans-serif;
+  margin: 0;
+}
+
+.container {
+  margin: 1rem;
+}
+
+.rate-low {
+  color: red
+}
+.rate-medium {
+  color: orange
+}
+.rate-high {
+  color: green
+}
+
+.movie-title {
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
