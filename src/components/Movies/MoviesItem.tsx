@@ -45,7 +45,6 @@ export default function MoviesItem({movie, genres}: any) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    console.log(genres)
     setOpen(true);
   };
 
@@ -99,7 +98,9 @@ export default function MoviesItem({movie, genres}: any) {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">{movie.title}</DialogTitle>
+        <DialogTitle id="responsive-dialog-title">
+          <h2>{movie.title}</h2>
+        </DialogTitle>
         <DialogContent>
           <Grid container justify="center">
             <img className={classes.dialogImg} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt=""/>
@@ -116,8 +117,11 @@ export default function MoviesItem({movie, genres}: any) {
               </Grid>
             </Grid>
           </h4>
-          
-          <Grid item>{formatGenres()}</Grid>
+
+          <h4>
+            Genres:
+          </h4>
+          <Grid item className={classes.sectionTitle}> {formatGenres()}</Grid>
 
           <h4>Overview:</h4>
           <DialogContentText>
