@@ -2,17 +2,17 @@
 
 This project was developed using [React](https://reactjs.org/) and [TMDb](https://www.themoviedb.org/).
 
-[Demo]()
+[Demo](https://determined-archimedes-5c1ebd.netlify.app/)
 
 ## Installation
 
-> Clone the respository
+Clone the respository
 ```bash
 # clone the repository
 git clone git@github.com:ichbinkour/canal-plus-movies.git
 ```
 
-> Install the dependencies
+Install the dependencies
 ```bash
 # npm
 npm install
