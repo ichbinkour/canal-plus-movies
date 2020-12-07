@@ -17,7 +17,7 @@ Install the dependencies
 # npm
 npm install
 
-#yarn
+# yarn
 yarn install
 ```
 
