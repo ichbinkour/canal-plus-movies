@@ -30,3 +30,12 @@ yarn start
 ```
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+### Specs
+
+- Search
+- Infinite scroll
+
+### Ideas
+
+- Use a debounce method for the search input
+- Add filters as show movies by `year`, `rating`, `country`, `lang`, etc.
